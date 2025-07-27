@@ -11,9 +11,9 @@ export default function Table({ Deletuser, UpdatedUser }) {
             try {
                 const user = await axios.get('http://localhost:8000/api/get')
                 const response = user.data
-                // console.log(response.users)
+                //console.log(response.users)
                 setData(response)
-                // console.log(response.data.users.email, 'email')
+                //console.log(data.users[1].name)
             } catch (error) {
                 console.log(error)
             }

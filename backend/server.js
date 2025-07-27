@@ -15,7 +15,7 @@ app.use('/api',routers)
 
 
 
-
-app.listen(process.env.PORT,()=>{
-    console.log('server is running')
+const port = process.env.PORT
+app.listen(port,()=>{
+    console.log('server is running at port '+ port)
 })
