@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'npm install -g pm2'
                 dir('server') {
-                    sh 'pm2 start index.js --name mern-app || pm2 restart mern-app'
+                    sh 'pm2 start server.js --name mern-app || pm2 restart mern-app'
                 }
             }
         }
