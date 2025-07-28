@@ -22,7 +22,7 @@ pipeline {
         stage('Run App') {
             steps {
                 sh 'npm install -g pm2'
-                dir('server') {
+                dir('backend') {
                     sh 'pm2 start server.js --name mern-app || pm2 restart mern-app'
                 }
             }
