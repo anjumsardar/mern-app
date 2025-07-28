@@ -11,6 +11,7 @@ pipeline {
                 }
             }
         }
+
         stage('Build Client') {
             steps {
                 dir('client') {
@@ -19,13 +20,30 @@ pipeline {
                 }
             }
         }
+
         stage('Run App') {
             steps {
+                // Install PM2 globally
                 sh 'npm install -g pm2'
+
+                // Start the backend server using PM2
                 dir('backend') {
                     sh 'pm2 start server.js --name mern-app || pm2 restart mern-app'
                 }
+
+                // Start the frontend app using npm (dev mode)
+                dir('client') {
+                    sh 'npm run dev &'
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            // Clean up after pipeline run
+            sh 'pm2 stop mern-app'
+            sh 'pm2 delete mern-app'
         }
     }
 }
