@@ -16,12 +16,12 @@ pipeline {
             steps {
                 dir('client') {
                     sh 'npm install'
-                    sh 'npm run build'  // You may need to use 'npm run dev' for the development server
+                    sh 'npm run build'  // Build the frontend (production build)
                 }
             }
         }
 
-        stage('Run App') {
+        stage('Run Backend') {
             steps {
                 // Install PM2 globally
                 sh 'npm install -g pm2'
@@ -30,20 +30,19 @@ pipeline {
                 dir('backend') {
                     sh 'pm2 start server.js --name mern-app || pm2 restart mern-app'
                 }
+            }
+        }
 
-                // Start the frontend app (dev mode) in the background using 'nohup'
+        stage('Serve Frontend') {
+            steps {
                 dir('client') {
-                    sh 'nohup npm run dev &'
+                    // Serve the built frontend (production build) using http-server
+                    sh 'npm install -g http-server'  // Install http-server globally
+                    sh 'http-server ./dist -p 5173'  // Serve the dist folder on port 5173
                 }
             }
         }
     }
 
-    post {
-        always {
-            // Clean up after pipeline run
-            sh 'pm2 stop mern-app'
-            sh 'pm2 delete mern-app'
-        }
-    }
+   
 }
