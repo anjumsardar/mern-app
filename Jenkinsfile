@@ -16,7 +16,7 @@ pipeline {
             steps {
                 dir('client') {
                     sh 'npm install'
-                    sh 'npm run build'
+                    sh 'npm run build'  // You may need to use 'npm run dev' for the development server
                 }
             }
         }
@@ -31,9 +31,9 @@ pipeline {
                     sh 'pm2 start server.js --name mern-app || pm2 restart mern-app'
                 }
 
-                // Start the frontend app using npm (dev mode)
+                // Start the frontend app (dev mode) in the background using 'nohup'
                 dir('client') {
-                    sh 'npm run dev &'
+                    sh 'nohup npm run dev &'
                 }
             }
         }
