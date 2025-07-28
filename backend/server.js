@@ -19,7 +19,7 @@ app.use('/api',routers)
 
 
 
-const port = process.env.PORT || 8000
+const port = 8000 || process.env.PORT
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on http://0.0.0.0:${port}`);
