@@ -32,6 +32,33 @@ const get=async(req,res)=>{
 
 }
 
+/////Get user by id 
+const getUserById = async (req, res) => {
+  try {
+    const user = await usermodel.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error"
+    });
+  }
+}; 
+
 ////////update user api
 const Updated=async(req,res)=>{
  try {
@@ -63,7 +90,7 @@ try {
 }
 }
 
-export {create,get,Updated,Delete}
+export {create,get,getUserById,Updated,Delete}
 
 
 

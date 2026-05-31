@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-export default function Table({ Deletuser, UpdatedUser }) {
+export default function Table({ Deletuser, UpdatedUser}) {
     const [data, setData] = useState([])
-
-
+        
 
     useEffect(() => {
         async function FeatchData() {
@@ -60,7 +59,7 @@ export default function Table({ Deletuser, UpdatedUser }) {
                                         <td>{elem.email}</td>
                                         <td>{elem.phone}</td>
                                         <td>
-                                            <a href="#" className="edit cursor-pointer" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onClick={() => UpdatedUser(elem._id)}>
+                                            <a href="#" className="edit cursor-pointer" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onClick={() => UpdatedUser(elem)}>
                                                 <i className="material-icons" data-bs-toggle="tooltip" title="Edit">&#xE254;</i>
                                             </a>
                                             <a href="#" className="delete cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" onClick={() => Deletuser(elem._id)}>

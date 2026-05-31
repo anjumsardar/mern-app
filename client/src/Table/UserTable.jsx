@@ -40,11 +40,22 @@ export default function UserTable() {
     }
 
 
-    const UpadteUserData = (Updatedid) => {
+    /* const UpadteUserData = (Updatedid) => {
 
         setUpdatedUserId(Updatedid)
 
+    } */
+    const UpadteUserData = (user) => {
+        setUpdatedUserId(user._id);
+
+        setValue({
+            name: user.name,
+            fathername: user.fathername,
+            email: user.email,
+            phone: user.phone
+        });
     }
+
     const handleOnSubmit = async (e) => {
         e.preventDefault();
     

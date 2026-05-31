@@ -7,7 +7,7 @@ import routers from './routes/routes.js'
 import dbCon from "./utlis/db.js";
 
 const app=express()
-await dbCon()
+dbCon()
 app.use(cors())
 app.use(express.json())
 app.use('/api',routers)

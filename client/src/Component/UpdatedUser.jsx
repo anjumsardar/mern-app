@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
+
 export default function UpdatedUser({ handleOnSubmit, value, handlechange }) {
-
-
+    
+    console.log("UpdatedUser value:", value);
 
     return (
         <>
