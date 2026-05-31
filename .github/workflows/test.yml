@@ -1,0 +1,22 @@
+name: Manual Test Pipeline
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show folder structure
+        run: ls -R
+
+      - name: Check Node version
+        run: node -v
+
+      - name: Check npm version
+        run: npm -v
