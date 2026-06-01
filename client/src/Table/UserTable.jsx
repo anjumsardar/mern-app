@@ -21,7 +21,7 @@ export default function UserTable() {
     }
     const handleUserDelet = async () => {
         try {
-            const DeletUser = await axios.delete(`http://localhost:8000/api/delete/${userId}`)
+            const DeletUser = await axios.delete(`/api/delete/${userId}`)
             const response = DeletUser.data
             if (response.success) {
                 toast.success(response.message)
@@ -60,7 +60,7 @@ export default function UserTable() {
         e.preventDefault();
     
         try {
-            const UpdatedUser = await axios.put(`http://localhost:8000/api/update/${updatedUserId}`,value)
+            const UpdatedUser = await axios.put(`/api/update/${updatedUserId}`,value)
             const response = UpdatedUser.data
 
             if (response.success) {
