@@ -1,0 +1,8 @@
+backend:
+  image: backend-image:latest
+
+frontend:
+  image: frontend-image:latest
+
+mongo:
+  uri: mongodb://mongo:27017/mern_crud

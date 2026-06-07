@@ -10,4 +10,11 @@ export default defineConfig({
     port: 5173, // You can choose any port that is not already in use
     strictPort: true, // Fail if the port is already in use
   },
+
+  proxy: {
+      '/api': {
+        target: 'http://backend:8000',
+        changeOrigin: true,
+      }
+    }
 })

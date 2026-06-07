@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+
+      # ✅ WAIT FOR MONGO BEFORE STARTING BACKEND
+      initContainers:
+      - name: wait-for-mongo
+        image: busybox:1.36
+        command: ['sh', '-c', 'until nc -z mongo 27017; do echo waiting for mongo; sleep 2; done;']
+
+      containers:
+      - name: backend
+        image: backend-image
+        ports:
+        - containerPort: 8000
+
+        env:
+        - name: MONGO_URI
+          value: mongodb://mongo:27017/mern_crud
+
+        # ✅ HEALTH CHECK (used by Kubernetes)
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 5
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 10

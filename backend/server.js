@@ -7,7 +7,7 @@ import routers from './routes/routes.js'
 import dbCon from "./utlis/db.js";
 
 const app=express()
-dbCon()
+//dbCon()
 app.use(cors())
 app.use(express.json())
 app.use('/api',routers)
@@ -20,6 +20,18 @@ app.get("/health", (req, res) => {
 
 const port = process.env.PORT || 8000
 
-app.listen(port, '0.0.0.0', () => {
+const startServer = async () => {
+  await dbCon();
+
+  app.listen(8000, () => {
+    console.log("Server running on 8000");
+  });
+};
+
+
+startServer();
+
+/* app.listen(port, '0.0.0.0', () => {
     console.log(`Server running on http://0.0.0.0:${port}`);
 });
+ */
