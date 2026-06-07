@@ -1,0 +1,36 @@
+name: Build and Push Backend to GHCR
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Log in to GHCR (USING GITHUB_TOKEN - your current approach)
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. Build Docker image
+      - name: Build backend image
+        run: |
+          docker build -t ghcr.io/anjumsardar/backend-image:v1 ./backend
+
+      # 4. Push Docker image
+      - name: Push backend image
+        run: |
+          docker push ghcr.io/anjumsardar/backend-image:v1
