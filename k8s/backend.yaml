@@ -13,23 +13,28 @@ spec:
         app: backend
     spec:
 
-      # ✅ WAIT FOR MONGO BEFORE STARTING BACKEND
       initContainers:
       - name: wait-for-mongo
         image: busybox:1.36
-        command: ['sh', '-c', 'until nc -z mongo 27017; do echo waiting for mongo; sleep 2; done;']
+        command:
+          - sh
+          - -c
+          - until nc -z mongo 27017; do echo waiting for mongo; sleep 2; done;
 
       containers:
       - name: backend
-        image: backend-image
+        image: ghcr.io/anjumsardar/backend-image:v1
+
         ports:
         - containerPort: 8000
 
         env:
         - name: MONGO_URI
-          value: mongodb://mongo:27017/mern_crud
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: MONGO_URI
 
-        # ✅ HEALTH CHECK (used by Kubernetes)
         readinessProbe:
           httpGet:
             path: /health

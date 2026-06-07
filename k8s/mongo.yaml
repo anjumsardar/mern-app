@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
+  labels:
+    app: mongo
 spec:
   replicas: 1
   selector:
@@ -22,6 +24,29 @@ spec:
         - name: mongo-storage
           mountPath: /data/db
 
+        # ✅ Readiness check
+        readinessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+        # ✅ Liveness check
+        livenessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 15
+          periodSeconds: 20
+
+        # (optional but good practice)
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+
       volumes:
       - name: mongo-storage
         persistentVolumeClaim:
@@ -38,3 +63,4 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
+  type: ClusterIP
